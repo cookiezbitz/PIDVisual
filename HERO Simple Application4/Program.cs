@@ -20,10 +20,10 @@ namespace Hero_Simple_Application5
 
             /* create a gamepad object */
             CTRE.Phoenix.Controller.GameController myGamepad = new CTRE.Phoenix.Controller.GameController(new
-           CTRE.Phoenix.UsbHostDevice(1));
+            CTRE.Phoenix.UsbHostDevice(1));
             /* create a talon, the Talon Device ID in HERO LifeBoat is zero */
             CTRE.Phoenix.MotorControl.CAN.TalonSRX myTalon = new CTRE.Phoenix.MotorControl.CAN.TalonSRX(1);
-            
+            double encodervalue = (double)myTalon.SetSelectedSensorPosition(0, 0, 0);
 
             /* simple counter to print and watch using the debugger */
             int counter = 0;
@@ -35,8 +35,14 @@ namespace Hero_Simple_Application5
                 read1 = analogInput1.Read();
                 read2 = analogInput2.Read();
 
+
+                encodervalue = myTalon.GetSelectedSensorPosition();
+                
+                //cannot collect encoder position??????????
+
                 /* print the three analog inputs as three columns */
                 Debug.Print("" + read0 + "\t" + read1 + "\t" + read2);
+                Debug.Print("Encoder position: " + encodervalue);
 
 
                 /* added inside the while loop */
@@ -47,15 +53,15 @@ namespace Hero_Simple_Application5
                     /* print the axis value */
                     Debug.Print("axis:" + myGamepad.GetAxis(1));
                     /* pass axis value to talon */
-                   myTalon.Set(CTRE.Phoenix.MotorControl.ControlMode.PercentOutput,read0);
+                    //-.045 to actually stop the thing as a temporary solution because there is an error regarding that
+                   myTalon.Set(CTRE.Phoenix.MotorControl.ControlMode.PercentOutput,read1-.07);
+                    /*  
+                      if (myGamepad.GetButton(1))
+                      {
+                          myTalon.Set(CTRE.Phoenix.MotorControl.ControlMode.PercentOutput, 0);
 
-                  /*  
-                    if (myGamepad.GetButton(1))
-                    {
-                        myTalon.Set(CTRE.Phoenix.MotorControl.ControlMode.PercentOutput, 0);
-                        
-                    }
-                  */
+                      }
+                    */
 
 
 
