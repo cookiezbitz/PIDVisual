@@ -1,0 +1,38 @@
+C:\Users\remie\source\repos\HERO Simple Application4\HERO Simple Application4\bin\Debug\le\HERO Simple Application4.exe
+C:\Users\remie\source\repos\HERO Simple Application4\HERO Simple Application4\bin\Debug\be\HERO Simple Application4.exe
+C:\Users\remie\source\repos\HERO Simple Application4\HERO Simple Application4\bin\Debug\le\HERO Simple Application4.pdb
+C:\Users\remie\source\repos\HERO Simple Application4\HERO Simple Application4\bin\Debug\be\HERO Simple Application4.pdb
+C:\Users\remie\source\repos\HERO Simple Application4\HERO Simple Application4\bin\Debug\HERO Simple Application4.exe
+C:\Users\remie\source\repos\HERO Simple Application4\HERO Simple Application4\bin\Debug\HERO Simple Application4.pdb
+C:\Users\remie\source\repos\HERO Simple Application4\HERO Simple Application4\bin\Debug\le\HERO Simple Application4.pe
+C:\Users\remie\source\repos\HERO Simple Application4\HERO Simple Application4\bin\Debug\le\HERO Simple Application4.pdbx
+C:\Users\remie\source\repos\HERO Simple Application4\HERO Simple Application4\bin\Debug\be\HERO Simple Application4.pe
+C:\Users\remie\source\repos\HERO Simple Application4\HERO Simple Application4\bin\Debug\be\HERO Simple Application4.pdbx
+C:\Users\remie\source\repos\HERO Simple Application4\HERO Simple Application4\obj\Debug\HERO Simple Application4.csproj.AssemblyReference.cache
+C:\Users\remie\source\repos\HERO Simple Application4\HERO Simple Application4\obj\Debug\TinyCLR_DebugReferences.cache
+C:\Users\remie\source\repos\HERO Simple Application4\HERO Simple Application4\obj\Debug\HERO Simple Application4.csproj.CoreCompileInputs.cache
+C:\Users\remie\source\repos\HERO Simple Application4\HERO Simple Application4\obj\Debug\be\HERO Simple Application4.pe
+C:\Users\remie\source\repos\HERO Simple Application4\HERO Simple Application4\obj\Debug\be\HERO Simple Application4.pdbx
+C:\Users\remie\source\repos\HERO Simple Application4\HERO Simple Application4\obj\Debug\le\HERO Simple Application4.pe
+C:\Users\remie\source\repos\HERO Simple Application4\HERO Simple Application4\obj\Debug\le\HERO Simple Application4.pdbx
+C:\Users\remie\source\repos\HERO Simple Application4\HERO Simple Application4\obj\Debug\HERO Simple Application4.exe
+C:\Users\remie\source\repos\HERO Simple Application4\HERO Simple Application4\obj\Debug\HERO Simple Application4.pdb
+C:\Users\remie\Documents\GitHub\PIDVisual\HERO Simple Application4\bin\Debug\le\HERO Simple Application4.exe
+C:\Users\remie\Documents\GitHub\PIDVisual\HERO Simple Application4\bin\Debug\be\HERO Simple Application4.exe
+C:\Users\remie\Documents\GitHub\PIDVisual\HERO Simple Application4\bin\Debug\le\HERO Simple Application4.pdb
+C:\Users\remie\Documents\GitHub\PIDVisual\HERO Simple Application4\bin\Debug\be\HERO Simple Application4.pdb
+C:\Users\remie\Documents\GitHub\PIDVisual\HERO Simple Application4\bin\Debug\HERO Simple Application4.exe
+C:\Users\remie\Documents\GitHub\PIDVisual\HERO Simple Application4\bin\Debug\HERO Simple Application4.pdb
+C:\Users\remie\Documents\GitHub\PIDVisual\HERO Simple Application4\bin\Debug\le\HERO Simple Application4.pe
+C:\Users\remie\Documents\GitHub\PIDVisual\HERO Simple Application4\bin\Debug\le\HERO Simple Application4.pdbx
+C:\Users\remie\Documents\GitHub\PIDVisual\HERO Simple Application4\bin\Debug\be\HERO Simple Application4.pe
+C:\Users\remie\Documents\GitHub\PIDVisual\HERO Simple Application4\bin\Debug\be\HERO Simple Application4.pdbx
+C:\Users\remie\Documents\GitHub\PIDVisual\HERO Simple Application4\obj\Debug\HERO Simple Application4.csproj.AssemblyReference.cache
+C:\Users\remie\Documents\GitHub\PIDVisual\HERO Simple Application4\obj\Debug\TinyCLR_DebugReferences.cache
+C:\Users\remie\Documents\GitHub\PIDVisual\HERO Simple Application4\obj\Debug\HERO Simple Application4.csproj.CoreCompileInputs.cache
+C:\Users\remie\Documents\GitHub\PIDVisual\HERO Simple Application4\obj\Debug\be\HERO Simple Application4.pe
+C:\Users\remie\Documents\GitHub\PIDVisual\HERO Simple Application4\obj\Debug\be\HERO Simple Application4.pdbx
+C:\Users\remie\Documents\GitHub\PIDVisual\HERO Simple Application4\obj\Debug\le\HERO Simple Application4.pe
+C:\Users\remie\Documents\GitHub\PIDVisual\HERO Simple Application4\obj\Debug\le\HERO Simple Application4.pdbx
+C:\Users\remie\Documents\GitHub\PIDVisual\HERO Simple Application4\obj\Debug\HERO Simple Application4.exe
+C:\Users\remie\Documents\GitHub\PIDVisual\HERO Simple Application4\obj\Debug\HERO Simple Application4.pdb
