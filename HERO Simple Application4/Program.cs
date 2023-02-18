@@ -17,6 +17,7 @@ namespace Hero_Simple_Application5
             double read0;
             double read1;
             double read2;
+            int forwardbackward = -1;
 
             /* create a gamepad object */
             CTRE.Phoenix.Controller.GameController myGamepad = new CTRE.Phoenix.Controller.GameController(new
@@ -54,14 +55,19 @@ namespace Hero_Simple_Application5
                     Debug.Print("axis:" + myGamepad.GetAxis(1));
                     /* pass axis value to talon */
                     //-.045 to actually stop the thing as a temporary solution because there is an error regarding that
-                   myTalon.Set(CTRE.Phoenix.MotorControl.ControlMode.PercentOutput,read1-.07);
-                    /*  
-                      if (myGamepad.GetButton(1))
-                      {
-                          myTalon.Set(CTRE.Phoenix.MotorControl.ControlMode.PercentOutput, 0);
+                    myTalon.Set(CTRE.Phoenix.MotorControl.ControlMode.PercentOutput,read1 * forwardbackward);
+                   
+                   if(myGamepad.GetButton(1))
+                    {
+                        Debug.Print("done here");
+                        forwardbackward = -1;
+                    }
+                    else
+                    {
+                        Debug.Print("done there");
+                        forwardbackward = 1;
+                    }
 
-                      }
-                    */
 
 
 
