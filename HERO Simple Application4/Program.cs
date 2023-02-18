@@ -15,7 +15,7 @@ namespace Hero_Simple_Application5
         static AnalogInput analogInput2 = new AnalogInput(CTRE.HERO.IO.Port8.Analog_Pin5);
 
         /** talon to control */
-        private TalonSRX _talon = new TalonSRX(1);
+
         /** desired mode to put talon in */
         private ControlMode _mode = ControlMode.PercentOutput;
         /** attached gamepad to HERO, tested with Logitech F710 */
@@ -66,22 +66,26 @@ namespace Hero_Simple_Application5
             myTalon.SetNeutralMode(NeutralMode.Brake);
 
             /* closed-loop and motion-magic parameters */
-            myTalon.Config_kF(kSlotIdx, 0.1153f, kTimeoutMs); // 8874 native sensor units per 100ms at full motor output (+1023)
-            myTalon.Config_kP(kSlotIdx, 2.00f, kTimeoutMs);
+            myTalon.ConfigSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, kSlotIdx, kTimeoutMs);
+            myTalon.Config_kF(kSlotIdx, 0, kTimeoutMs); // 8874 native sensor units per 100ms at full motor output (+1023)
+            myTalon.Config_kP(kSlotIdx, 10.00f, kTimeoutMs);
             myTalon.Config_kI(kSlotIdx, 0f, kTimeoutMs);
-            myTalon.Config_kD(kSlotIdx, 20f, kTimeoutMs);
+            myTalon.Config_kD(kSlotIdx, 0f, kTimeoutMs);
             myTalon.Config_IntegralZone(kSlotIdx, 0, kTimeoutMs);
             myTalon.SelectProfileSlot(kSlotIdx, 0); /* select this slot */
             myTalon.ConfigNominalOutputForward(0f, kTimeoutMs);
             myTalon.ConfigNominalOutputReverse(0f, kTimeoutMs);
             myTalon.ConfigPeakOutputForward(1.0f, kTimeoutMs);
             myTalon.ConfigPeakOutputReverse(-1.0f, kTimeoutMs);
+            
             /* Home the relative sensor, 
     alternatively you can throttle until limit switch,
     use an absolute signal like CtreMagEncoder_Absolute or analog sensor.
     */
             myTalon.SetSelectedSensorPosition(0, kTimeoutMs);
 
+
+            myTalon.Set(CTRE.Phoenix.MotorControl.ControlMode.Position, 100000/ 11.3888888888888888889);
 
 
 
@@ -91,24 +95,17 @@ namespace Hero_Simple_Application5
             while (true)
             {
 
-                /*
-                error = setpoint - (double)myTalon.SetSelectedSensorPosition(0, 0, 0);
-                integral = integral + error;
-                if (error = 0 or passes setpoint)
-                    integral = 0;
-                if (error is outside useful range)
-                    integral = 0;
-                derivative = error - prevError;
-                prevError = error;
-                power = error * kP + integral * kI + derivative * kD;
-                */
+                
 
+
+                
 
                 /* grab analog value */
                 read0 = analogInput0.Read();
                 read1 = analogInput1.Read();
                 read2 = analogInput2.Read();
 
+                double movetoposition = read0 * -100000000000;
 
                 encodervalue = myTalon.GetSelectedSensorPosition();
 
@@ -117,28 +114,31 @@ namespace Hero_Simple_Application5
                 /* print the three analog inputs as three columns */
                 Debug.Print("" + read0 + "\t" + read1 + "\t" + read2);
                 Debug.Print("Encoder position: " + encodervalue);
+                Debug.Print("Encoder position in degrees:" + encodervalue / 11.3888888888888888889);
 
 
                 /* added inside the while loop */
                 if (myGamepad.GetConnectionStatus() == CTRE.Phoenix.UsbDeviceConnection.Connected)
                 {
                     // print button value
-                    Debug.Print("button1: " + myGamepad.GetButton(1));
-                    Debug.Print("button2: " + myGamepad.GetButton(2));
+                    //   Debug.Print("button1: " + myGamepad.GetButton(1));
+                    // Debug.Print("button2: " + myGamepad.GetButton(2));
                     /* print the axis value */
-                    Debug.Print("axis:" + myGamepad.GetAxis(1));
+                    // Debug.Print("axis:" + myGamepad.GetAxis(1));
                     /* pass axis value to talon */
                     //-.045 to actually stop the thing as a temporary solution because there is an error regarding that
-                    myTalon.Set(CTRE.Phoenix.MotorControl.ControlMode.PercentOutput, read1 * forwardbackward);
 
+                    // myTalon.Set(CTRE.Phoenix.MotorControl.ControlMode.Position, movetoposition);
+              //      
+                  //  myTalon.Set(CTRE.Phoenix.MotorControl.ControlMode.PercentOutput, 0);
                     if (myGamepad.GetButton(1))
                     {
-                        Debug.Print("done here");
+                      //  Debug.Print("done here");
                         forwardbackward = -1;
                     }
                     if (myGamepad.GetButton(3))
                     {
-                        Debug.Print("done there");
+                      //  Debug.Print("done there");
                         forwardbackward = 1;
                     }
                     
@@ -160,6 +160,11 @@ Or add it to the Watch Tab */
                 /* wait a bit */
                 System.Threading.Thread.Sleep(10);
             }
+
+
+
+
+
         }
 
     }
