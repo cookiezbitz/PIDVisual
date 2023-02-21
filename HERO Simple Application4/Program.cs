@@ -38,6 +38,10 @@ namespace Hero_Simple_Application5
             float read2;
             int forwardbackward = -1;
             float tolerance = 400;
+            double currentrotation = 0;
+            bool PIDdone = false;
+            float stopPID = 0;
+            float runPID = 1;
 
 
 
@@ -59,19 +63,19 @@ namespace Hero_Simple_Application5
             myTalon.SetInverted(false);
 
             /* closed-loop and motion-magic parameters */
-            myTalon.ConfigSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, kSlotIdx, kTimeoutMs);
+            myTalon.ConfigSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, kSlotIdx, kTimeoutMs);
             myTalon.Config_kF(kSlotIdx, 0.1153f, kTimeoutMs); // 8874 native sensor units per 100ms at full motor output (+1023)
-            myTalon.Config_kP(kSlotIdx, .001f, kTimeoutMs);
-            myTalon.Config_kI(kSlotIdx, .01f, kTimeoutMs);
-            myTalon.Config_kD(kSlotIdx, 2f, kTimeoutMs);
+            myTalon.Config_kP(kSlotIdx, .00001f, kTimeoutMs);
+            myTalon.Config_kI(kSlotIdx, 1f, kTimeoutMs);
+            myTalon.Config_kD(kSlotIdx, 1f, kTimeoutMs);
             myTalon.Config_IntegralZone(kSlotIdx, 0, kTimeoutMs);
             myTalon.SelectProfileSlot(kSlotIdx, 0); /* select this slot */
             myTalon.ConfigNominalOutputForward(0f, kTimeoutMs);
             myTalon.ConfigNominalOutputReverse(0f, kTimeoutMs);
-            myTalon.ConfigPeakOutputForward(0.2f, kTimeoutMs);
-            myTalon.ConfigPeakOutputReverse(-0.2f, kTimeoutMs);
+            myTalon.ConfigPeakOutputForward(runPID, kTimeoutMs);
+            myTalon.ConfigPeakOutputReverse(-runPID, kTimeoutMs);
 
-            
+
             /* Home the relative sensor, 
     alternatively you can throttle until limit switch,
     use an absolute signal like CtreMagEncoder_Absolute or analog sensor.
@@ -79,9 +83,12 @@ namespace Hero_Simple_Application5
             myTalon.SetSelectedSensorPosition(0, kTimeoutMs);
 
 
-          //  if(boolean)
-            myTalon.Set(CTRE.Phoenix.MotorControl.ControlMode.Position, 3);
-            myTalon.Set(CTRE.Phoenix.MotorControl.ControlMode.Velocity, 0);
+            //  if(boolean)
+
+
+
+
+          //  myTalon.Set(CTRE.Phoenix.MotorControl.ControlMode.Velocity, 0);
          //   bollean = false
 
 
@@ -96,6 +103,20 @@ namespace Hero_Simple_Application5
 
 
 
+                if (!PIDdone)
+                {
+                    myTalon.ConfigPeakOutputForward(runPID, kTimeoutMs);
+                    myTalon.ConfigPeakOutputReverse(-runPID, kTimeoutMs);
+                    Debug.Print("pid running");
+                    myTalon.Set(CTRE.Phoenix.MotorControl.ControlMode.Position, 1);
+
+                }
+                if (PIDdone)
+                {
+                    Debug.Print("pid is done");
+                    myTalon.ConfigPeakOutputForward(stopPID, kTimeoutMs);
+                    myTalon.ConfigPeakOutputReverse(-stopPID, kTimeoutMs);
+                }
 
 
 
@@ -111,9 +132,9 @@ namespace Hero_Simple_Application5
                 //cannot collect encoder position??????????
 
                 /* print the three analog inputs as three columns */
-                Debug.Print("" + read0 + "\t" + read1 + "\t" + read2);
-                Debug.Print("Encoder position: " + encodervalue);
-                Debug.Print("Encoder position in degrees:" + encodervalue / 11.3888888888888888889);
+             //   Debug.Print("" + read0 + "\t" + read1 + "\t" + read2);
+               // Debug.Print("Encoder position: " + encodervalue);
+               // Debug.Print("Encoder position in degrees:" + encodervalue / 11.3888888888888888889);
 
 
                 /* added inside the while loop */
@@ -123,7 +144,7 @@ namespace Hero_Simple_Application5
                     //   Debug.Print("button1: " + myGamepad.GetButton(1));
                     // Debug.Print("button2: " + myGamepad.GetButton(2));
                     /* print the axis value */
-                     Debug.Print("axis:" + myGamepad.GetAxis(1));
+                //     Debug.Print("axis:" + myGamepad.GetAxis(1));
                     /* pass axis value to talon */
                     //-.045 to actually stop the thing as a temporary solution because there is an error regarding that
 
@@ -137,13 +158,19 @@ namespace Hero_Simple_Application5
 
                     if (myGamepad.GetButton(1))
                     {
-                      //  Debug.Print("done here");
-                        forwardbackward = -1;
+                        PIDdone = true;
+
                     }
+
+                    while(currentrotation > 0)
+                    {
+                        Debug.Print("CURRENT ROTATION: " + currentrotation);
+                    }
+
+
                     if (myGamepad.GetButton(3))
                     {
-                      //  Debug.Print("done there");
-                        forwardbackward = 1;
+                        PIDdone = false;
                     }
                     
 
