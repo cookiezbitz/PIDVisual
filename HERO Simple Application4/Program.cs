@@ -37,6 +37,7 @@ namespace Hero_Simple_Application5
             float read1;
             float read2;
             int forwardbackward = -1;
+            float tolerance = 400;
 
 
 
@@ -77,11 +78,14 @@ namespace Hero_Simple_Application5
     */
             myTalon.SetSelectedSensorPosition(0, kTimeoutMs);
 
+
+          //  if(boolean)
             myTalon.Set(CTRE.Phoenix.MotorControl.ControlMode.Position, 3);
+            myTalon.Set(CTRE.Phoenix.MotorControl.ControlMode.Velocity, 0);
+         //   bollean = false
 
 
-
-
+            //mag encoder units are 4096 counts per rotation
 
 
             /* simple counter to print and watch using the debugger */
