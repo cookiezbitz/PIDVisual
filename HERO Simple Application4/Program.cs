@@ -33,19 +33,11 @@ namespace Hero_Simple_Application5
         public static void Main()
         {
             //variable declarations
-            double read0;
-            double read1;
-            double read2;
+            float read0;
+            float read1;
+            float read2;
             int forwardbackward = -1;
-            double setpoint;
-            double error;
-            double integral;
-            double derivative;
-            double prevError;
-            double power;
-            double kP;
-            double kI;
-            double kD;
+
 
 
             /* create a gamepad object */
@@ -58,25 +50,26 @@ namespace Hero_Simple_Application5
             /* Factory Default all hardware to prevent unexpected behaviour */
             myTalon.ConfigFactoryDefault();
             /* specify sensor characteristics */
-            myTalon.ConfigSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, 0);
             myTalon.SetSensorPhase(false); /* make sure positive motor output means sensor moves in position direction */
 
 
             /* brake or coast during neutral */
             myTalon.SetNeutralMode(NeutralMode.Brake);
+            myTalon.SetInverted(false);
 
             /* closed-loop and motion-magic parameters */
             myTalon.ConfigSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Absolute, kSlotIdx, kTimeoutMs);
-            myTalon.Config_kF(kSlotIdx, 0, kTimeoutMs); // 8874 native sensor units per 100ms at full motor output (+1023)
-            myTalon.Config_kP(kSlotIdx, 10.00f, kTimeoutMs);
-            myTalon.Config_kI(kSlotIdx, 0f, kTimeoutMs);
-            myTalon.Config_kD(kSlotIdx, 0f, kTimeoutMs);
+            myTalon.Config_kF(kSlotIdx, 0.1153f, kTimeoutMs); // 8874 native sensor units per 100ms at full motor output (+1023)
+            myTalon.Config_kP(kSlotIdx, .001f, kTimeoutMs);
+            myTalon.Config_kI(kSlotIdx, .01f, kTimeoutMs);
+            myTalon.Config_kD(kSlotIdx, 2f, kTimeoutMs);
             myTalon.Config_IntegralZone(kSlotIdx, 0, kTimeoutMs);
             myTalon.SelectProfileSlot(kSlotIdx, 0); /* select this slot */
             myTalon.ConfigNominalOutputForward(0f, kTimeoutMs);
             myTalon.ConfigNominalOutputReverse(0f, kTimeoutMs);
-            myTalon.ConfigPeakOutputForward(1.0f, kTimeoutMs);
-            myTalon.ConfigPeakOutputReverse(-1.0f, kTimeoutMs);
+            myTalon.ConfigPeakOutputForward(0.2f, kTimeoutMs);
+            myTalon.ConfigPeakOutputReverse(-0.2f, kTimeoutMs);
+
             
             /* Home the relative sensor, 
     alternatively you can throttle until limit switch,
@@ -84,8 +77,10 @@ namespace Hero_Simple_Application5
     */
             myTalon.SetSelectedSensorPosition(0, kTimeoutMs);
 
+            myTalon.Set(CTRE.Phoenix.MotorControl.ControlMode.Position, 3);
 
-            myTalon.Set(CTRE.Phoenix.MotorControl.ControlMode.Position, 100000/ 11.3888888888888888889);
+
+
 
 
 
@@ -95,17 +90,17 @@ namespace Hero_Simple_Application5
             while (true)
             {
 
-                
 
 
-                
+
+
 
                 /* grab analog value */
-                read0 = analogInput0.Read();
-                read1 = analogInput1.Read();
-                read2 = analogInput2.Read();
+                read0 = (float)analogInput0.Read();
+                read1 = (float)analogInput1.Read();
+                read2 = (float)analogInput2.Read();
 
-                double movetoposition = read0 * -100000000000;
+
 
                 encodervalue = myTalon.GetSelectedSensorPosition();
 
@@ -124,13 +119,18 @@ namespace Hero_Simple_Application5
                     //   Debug.Print("button1: " + myGamepad.GetButton(1));
                     // Debug.Print("button2: " + myGamepad.GetButton(2));
                     /* print the axis value */
-                    // Debug.Print("axis:" + myGamepad.GetAxis(1));
+                     Debug.Print("axis:" + myGamepad.GetAxis(1));
                     /* pass axis value to talon */
                     //-.045 to actually stop the thing as a temporary solution because there is an error regarding that
 
                     // myTalon.Set(CTRE.Phoenix.MotorControl.ControlMode.Position, movetoposition);
-              //      
-                  //  myTalon.Set(CTRE.Phoenix.MotorControl.ControlMode.PercentOutput, 0);
+                    //    
+
+           //         myTalon.Config_kP(kSlotIdx, read0, kTimeoutMs);
+             //       myTalon.Config_kI(kSlotIdx, read1, kTimeoutMs);
+               //     myTalon.Config_kD(kSlotIdx, read2, kTimeoutMs);
+
+
                     if (myGamepad.GetButton(1))
                     {
                       //  Debug.Print("done here");
@@ -154,14 +154,13 @@ namespace Hero_Simple_Application5
                     /* allow motor control */
                     CTRE.Phoenix.Watchdog.Feed();
                 }
+         //       
                 /* increment counter */
                 ++counter; /* try to land a breakpoint here and hover over 'counter' to see it's current value.
 Or add it to the Watch Tab */
                 /* wait a bit */
                 System.Threading.Thread.Sleep(10);
             }
-
-
 
 
 
