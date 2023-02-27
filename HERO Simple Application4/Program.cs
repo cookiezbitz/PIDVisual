@@ -56,7 +56,7 @@ namespace Hero_Simple_Application5
             int forwardbackward = -1;
             float tolerance = 400;
             double currentrotation = 0;
-            bool PIDdone = false;
+            bool PIDdone = true;
             float stopPID = 0;
             float runPID = 1;
 
@@ -67,9 +67,9 @@ namespace Hero_Simple_Application5
             double derivative = 0;
             double prevError = 0;
             double power = 0;
-            double kP = .005;
-            double kI = .005;
-            double kD = .005;
+            double kP = 1;
+            double kI = 1;
+            double kD = 1;
             double setpoint = 1;
 
 
@@ -96,7 +96,7 @@ namespace Hero_Simple_Application5
 
             /* brake or coast during neutral */
             myTalon.SetNeutralMode(NeutralMode.Brake);
-            myTalon.SetInverted(false);
+
 
             /* closed-loop and motion-magic parameters */
             myTalon.ConfigSelectedFeedbackSensor(FeedbackDevice.CTRE_MagEncoder_Relative, kSlotIdx, kTimeoutMs);
@@ -171,9 +171,11 @@ namespace Hero_Simple_Application5
 
             
 
-                myTalon.Set(CTRE.Phoenix.MotorControl.ControlMode.PercentOutput, power);
 
-                while (PIDdone)
+
+                setpoint = 2000000;
+
+                if (PIDdone)
                 {
                     error = setpoint - encodervalue;
                     integral = integral + error;
@@ -183,15 +185,18 @@ namespace Hero_Simple_Application5
                         integral = 0;
                     derivative = error - prevError;
                     prevError = error;
-                    power = error * kP + integral * kI + derivative * kD;
+                    power = (error * kP + integral * kI + derivative * kD)/1000;
                     Debug.Print("encodervalue: " + encodervalue);
-                 //  Debug.Print("Error: " + error);
+                    Debug.Print("Error: " + error);
+                    Debug.Print("power: " + power);
+                    
                 }
 
+               // myTalon.Set(CTRE.Phoenix.MotorControl.ControlMode.PercentOutput, .9);
 
 
 
-
+                  myTalon.Set(CTRE.Phoenix.MotorControl.ControlMode.PercentOutput, -power);
 
 
 
@@ -230,7 +235,7 @@ namespace Hero_Simple_Application5
                         Debug.Print("PID true ");
                     }
 
-                    while (myGamepad.GetButton(4))
+                    if (myGamepad.GetButton(4))
                     {
                         Debug.Print("PID FALSE, CURRENT ROTATION: " + currentrotation);
                         PIDdone = false;
