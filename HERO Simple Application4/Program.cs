@@ -50,9 +50,9 @@ namespace Hero_Simple_Application5
 
 
             //variable declarations
-            float read0;
-            float read1;
-            float read2;
+            double read0;
+            double read1;
+            double read2;
             int forwardbackward = -1;
             float tolerance = 400;
             double currentrotation = 0;
@@ -161,10 +161,13 @@ namespace Hero_Simple_Application5
 
 
                 /* grab analog value */
-                read0 = (float)analogInput0.Read();
-                read1 = (float)analogInput1.Read();
-                read2 = (float)analogInput2.Read();
+                read0 = analogInput0.Read();
+                read1 = analogInput1.Read();
+                read2 = analogInput2.Read();
 
+                kP = read0;
+                kI = read1;
+                kD = read2;
 
 
                 encodervalue = myTalon.GetSelectedSensorPosition();
@@ -185,7 +188,7 @@ namespace Hero_Simple_Application5
                         integral = 0;
                     derivative = error - prevError;
                     prevError = error;
-                    power = (error * kP + integral * kI + derivative * kD)/1000;
+                    power = (error * kP + integral * kI + derivative * kD)/100;
                     Debug.Print("encodervalue: " + encodervalue);
                     Debug.Print("Error: " + error);
                     Debug.Print("power: " + power);
@@ -259,9 +262,7 @@ namespace Hero_Simple_Application5
                     */
 
 
-                    myTalon.Config_kP(kSlotIdx, read0, kTimeoutMs);
-                    myTalon.Config_kI(kSlotIdx, read1, kTimeoutMs);
-                    myTalon.Config_kD(kSlotIdx, read2, kTimeoutMs);
+
 
 
                     /* allow motor control */
