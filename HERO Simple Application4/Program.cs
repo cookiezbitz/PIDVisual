@@ -15,14 +15,6 @@ namespace Hero_Simple_Application5
         static AnalogInput analogInput2 = new AnalogInput(CTRE.HERO.IO.Port8.Analog_Pin5);
 
 
-
-
-
-
-
-
-
-
         /** talon to control */
 
         /** desired mode to put talon in */
@@ -67,9 +59,9 @@ namespace Hero_Simple_Application5
             double derivative = 0;
             double prevError = 0;
             double power = 0;
-            double kP = 1;
-            double kI = 1;
-            double kD = 1;
+            double kP = 5;
+            double kI = 12;
+            double kD = 7;
             double setpoint = 1;
 
 
@@ -119,15 +111,6 @@ namespace Hero_Simple_Application5
             myTalon.SetSelectedSensorPosition(0, kTimeoutMs);
 
 
-            //  if(boolean)
-
-
-
-
-            //  myTalon.Set(CTRE.Phoenix.MotorControl.ControlMode.Velocity, 0);
-            //   bollean = false
-
-
             //mag encoder units are 4096 counts per rotation
 
 
@@ -139,23 +122,6 @@ namespace Hero_Simple_Application5
             while (true)
             {
 
-
-                /*
-                if (!PIDdone)
-                {
-                    myTalon.ConfigPeakOutputForward(runPID, kTimeoutMs);
-                    myTalon.ConfigPeakOutputReverse(-runPID, kTimeoutMs);
-                    Debug.Print("pid running");
-
-
-                }
-                if (PIDdone)
-                {
-                    Debug.Print("pid is done");
-                    myTalon.ConfigPeakOutputForward(stopPID, kTimeoutMs);
-                    myTalon.ConfigPeakOutputReverse(-stopPID, kTimeoutMs);
-                }
-                */
 
 
 
@@ -203,33 +169,9 @@ namespace Hero_Simple_Application5
 
 
 
-
-
-                //cannot collect encoder position??????????
-
-                /* print the three analog inputs as three columns */
-                //   Debug.Print("" + read0 + "\t" + read1 + "\t" + read2);
-                // Debug.Print("Encoder position: " + encodervalue);
-                // Debug.Print("Encoder position in degrees:" + encodervalue / 11.3888888888888888889);
-
-
                 /* added inside the while loop */
                 if (myGamepad.GetConnectionStatus() == CTRE.Phoenix.UsbDeviceConnection.Connected)
                 {
-                    // print button value
-                    //   Debug.Print("button1: " + myGamepad.GetButton(1));
-                    // Debug.Print("button2: " + myGamepad.GetButton(2));
-                    /* print the axis value */
-                    //     Debug.Print("axis:" + myGamepad.GetAxis(1));
-                    /* pass axis value to talon */
-                    //-.045 to actually stop the thing as a temporary solution because there is an error regarding that
-
-                    // myTalon.Set(CTRE.Phoenix.MotorControl.ControlMode.Position, movetoposition);
-                    //    
-
-                    //         myTalon.Config_kP(kSlotIdx, read0, kTimeoutMs);
-                    //       myTalon.Config_kI(kSlotIdx, read1, kTimeoutMs);
-                    //     myTalon.Config_kD(kSlotIdx, read2, kTimeoutMs);
 
 
                     if (myGamepad.GetButton(1))
